@@ -1,0 +1,17 @@
+editor.selectionStart = 0;
+			var sel = editor.selection.getRng();
+		console.log(sel);	
+var ll = document.getElementById("script");
+console.log(ll);
+			sel.setStart(ll, 0);
+			sel.setEnd(ll, 0);
+
+			console.log(sel);
+
+			console.log(editor.selection.getContent());
+			console.log(sel.startContainer.textContent);
+			
+			console.log(sel.endContainer);
+			editor.selectionStart = editor.selectionEnd;
+		//	textAreaElement.selectionStart = 0;
+		//	.setSelectionRange( 0, 終了位置 );
