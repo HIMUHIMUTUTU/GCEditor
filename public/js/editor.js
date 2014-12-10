@@ -16,7 +16,6 @@ window.onload = function() {
 
 function MAIN(){
 	this.closeButton = document.getElementById('closeButton');
-	this.outputButton = document.getElementById('outputButton');
 	this.radioList  = document.getElementsByName("actionRadio");
 	this.lineCounter = document.getElementById("lineCounter");
 	this.wordCounter = document.getElementById("wordCounter");
@@ -26,7 +25,7 @@ function MAIN(){
 	this.networkStatus = document.getElementById("networkStatus");
 
 	this.timer = new Timer();
-	this.looptime = 1 * 10 * 1000;
+	this.looptime = 3 * 60 * 1000;
 
 	this.pageline = 40; //40 word 40 line
 	this.lineword = 40; //40 word 40 line
@@ -46,7 +45,6 @@ function MAIN(){
 
 	//function for bottun click
 	this.closeButton.onclick  = function(event) {self.close()};
-	this.outputButton.onclick = function(event) {self.output()};
 
 	//main loop
 	var loop = function(){
@@ -92,9 +90,12 @@ function MAIN(){
 			}
 		});
 		common.socket.on('loadedScript', function(data) {
-			console.log(data.value[0].script);
-			//self.initialLength = data.value[0].script.length;
-			tinyMCE.get('script').setContent(data.value[0].script);
+			console.dir(data);
+			if(data.value.length != 0){
+				console.log(data.value[0].script);
+				//self.initialLength = data.value[0].script.length;
+				tinyMCE.get('script').setContent(data.value[0].script);
+			}
 			self.status_flag = "recording";
 		});
 		common.socket.on('disconnect', function(data) {
@@ -272,9 +273,6 @@ MAIN.prototype.disableScript = function(_d){
 	}
 }
 
-MAIN.prototype.output = function(){
-	window.open('/download')
-}
 
 /** save and close window **/
 MAIN.prototype.close = function(){
