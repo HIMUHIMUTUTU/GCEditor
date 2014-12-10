@@ -6,18 +6,12 @@
 var referlog = require('../models/referlog');
 
 exports.view = function(req, res){
-	if(req.query.u){
-	}else{
-		console.log("no user");
-	}
-	referlog.selectScript("", 1, function(script_data){
+	referlog.selectScript("", 9999, function(script_data){
 		console.dir(script_data);
-		var script = removeHTML(script_data[0].script);
-		res.statusCode = 200;
-		res.setHeader('Content-disposition', 'attachment; filename=hoge.txt');
-		res.setHeader('Content-Type', 'text/plain');
-		res.send(script);
-		res.end;
+		for(var i = 0; i < script_data.length; i++){
+			script_data[i].script = removeHTML(script_data[i].script);
+		}
+		res.render('analysis', { title: 'analysis', script: script_data });
 	});
 };
 

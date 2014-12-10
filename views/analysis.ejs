@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html> 
+<head>
+<title><%= title %></title>
+<link rel='stylesheet' href='/css/editor.css' />
+</head>
+<body>
+<h1><%= title %></h1>
+<ul>
+	<table>
+		<tr>
+			<th>id</th>
+			<th>時刻</th>
+			<th>文章</th>
+			<th>文章文字数</th>
+			<th>速度(単位時間の打鍵文字数)</th>
+			<th>アクション</th>
+		</tr>
+	<% for(var i=0; i<script.length; i++) { %>
+		<tr>
+			<td><%= script[i].id ?></td>
+			<td><%= script[i].rectime ?></td>
+			<td><%= script[i].script ?></td>
+			<td><%= script[i].scriptlen ?></td>
+			<td><%= script[i].keycount ?></td>
+			<td><%= script[i].action ?></td>
+		</tr>
+	<% } %>
+	</table>
+</body>
+
+</html>

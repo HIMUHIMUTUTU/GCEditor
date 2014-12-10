@@ -73,14 +73,17 @@
  };
  
  // select wordlog
- referlog.selectScript = function (_u,callback) {
+ referlog.selectScript = function (_u, _n, callback) {
    db.query(
      'SELECT * '
 	   + 'FROM script '
        //+ 'WHERE id =  ? '
        + 'WHERE status_flag = "1" '
-       + 'ORDER BY rectime DESC LIMIT 0,1 '
+       + 'ORDER BY rectime '
+       + 'DESC '
+       + 'LIMIT 0,? '
        + ';',
+     [_n],
      function (err, results, fields) {
        db.end();
        //var sid = results.insertId;

@@ -20,7 +20,7 @@ io.sockets.on('connection', function(socket) {
 
 	/** receive database Request **/
 	socket.on('loadRequest', function(data){
-		referlog.selectScript(data.value, function(script_data){
+		referlog.selectScript(data.value, 1, function(script_data){
 			//send it to editor
 			for (key in client['editor']){
 				var csocket = client['editor'][key]

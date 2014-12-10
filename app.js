@@ -8,6 +8,7 @@ var routes = require('./routes');
 var editor = require('./routes/editor');
 var doclist = require('./routes/doclist');
 var download = require('./routes/download');
+var analysis = require('./routes/analysis');
 //var hwrecognition = require('./routes/hwrecognition');
 var http = require('http');
 var path = require('path');
@@ -61,6 +62,7 @@ app.get('/', routes.index);
 app.get('/editor', editor.view);
 app.get('/doclist', doclist.view);
 app.get('/download', download.view);
+app.get('/analysis', analysis.view);
 
 server = http.createServer(app);
 server.listen(app.get('port'), function(){

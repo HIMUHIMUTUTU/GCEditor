@@ -4,5 +4,5 @@
  */
 
 exports.view = function(req, res){
-  res.render('doclist', { title: 'List of Documents' });
+  res.render('doclist', { title: 'documents' });
 };
