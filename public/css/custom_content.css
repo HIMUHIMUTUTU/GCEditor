@@ -1,6 +1,9 @@
 body {
 	font-size: 10pt;
-	line-height: 0.7em;
+	line-height: 2em;
+}
+p {
+	margin:0;
 }
 p.break {
 	color: #c0c0c0;
