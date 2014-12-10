@@ -12,7 +12,7 @@
     "ejs": "*",
     "socket.io": "*",
     "request": "*",
-    "xml2js": "*",
-    "async": "*"
+    "async": "*",
+    "forever": "*"
   }
 }
