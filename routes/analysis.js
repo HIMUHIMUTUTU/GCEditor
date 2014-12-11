@@ -7,6 +7,7 @@ var referlog = require('../models/referlog');
 
 exports.view = function(req, res){
 	referlog.selectScript("", 9999, function(script_data){
+		console.dir("aa");
 		console.dir(script_data);
 		for(var i = 0; i < script_data.length; i++){
 			script_data[i].script = removeHTML(script_data[i].script);

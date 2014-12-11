@@ -27,3 +27,13 @@ div#infobox {
 	width:100%;
 	clear:left;
 }
+table {
+	border-collapse: collapse;
+	border: 1px #696969 solid;
+}
+td, th {
+	border: 1px #696969 solid;
+}
+td.script {
+	width: 60%;
+}
