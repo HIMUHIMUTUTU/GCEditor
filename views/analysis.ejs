@@ -1,23 +1,29 @@
 <!DOCTYPE html>
 <html> 
-<head>
-<title><%= title %></title>
-<link rel='stylesheet' href='/css/editor.css' />
-</head>
-<body>
-<h1><%= title %></h1>
-<h2>log</h2>
-	<table>
-		<tr>
-			<th>id</th>
-			<th>時刻</th>
-			<th>アクション</th>
-			<th>速度<br />(単位時間の打鍵文字数)</th>
-			<th>文章</th>
-			<th>文章文字数</th>
-		</tr>
-	<% for(var i=0; i<script.length; i++) { %>
-		<tr>
+	<head>
+		<title><%= title %></title>
+		<link rel='stylesheet' href='/css/editor.css' />
+		<script stype="text/javascript" src="/lib/ccchart-min.js" charset="utf-8"></script>
+		<script> var script_s = <%- JSON.stringify(script) %>;</script>
+	</head>
+	<body>
+		<h1><%= title %></h1>
+		<h2>summary</h2>
+		<canvas id="hoge"></canvas>
+		<canvas id="hoge2"></canvas>
+		<script stype="text/javascript" src="/js/analysis.js" charset="utf-8"></script>
+		<h2>log</h2>
+		<table>
+			<tr>
+				<th>id</th>
+				<th>経過時間</th>
+				<th>アクション</th>
+				<th>速度<br />(単位時間の打鍵数)</th>
+				<th>文章</th>
+				<th>文章文字数</th>
+			</tr>
+			<% for(var i=0; i<script.length; i++) { %>
+<tr>
 			<td><%= script[i].id %></td>
 			<td><%= script[i].rectime %></td>
 			<td><%= script[i].action %></td>

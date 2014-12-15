@@ -8,7 +8,6 @@ var clientinfo = {
 	type: 'editor'
 };
 
-
 /** MAIN Object **/
 window.onload = function() {
 	var main = new MAIN();
@@ -21,6 +20,7 @@ function MAIN(){
 	this.wordCounter = document.getElementById("wordCounter");
 	this.pageCounter = document.getElementById("pageCounter");
 	this.keyCounter = document.getElementById("keyCounter");
+	this.actionRadio = document.getElementById("actionRadio");
 	this.lastUpdate = document.getElementById("lastUpdate");
 	this.networkStatus = document.getElementById("networkStatus");
 
@@ -35,6 +35,7 @@ function MAIN(){
 	this.pagecount = 0;
 	this.keycount = 0;
 	this.monar = "";
+	this.actionradio = 0;
 	this.network = "offline";
 
 	//this.initialLength = 0; 
