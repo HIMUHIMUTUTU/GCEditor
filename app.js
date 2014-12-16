@@ -4,11 +4,13 @@
 
 var express = require('express');
 var cacheManifest = require('connect-cache-manifest');
+var bodyParser = require('body-parser');
 var routes = require('./routes');
 var editor = require('./routes/editor');
 var doclist = require('./routes/doclist');
 var download = require('./routes/download');
 var analysis = require('./routes/analysis');
+var tips = require('./routes/tips');
 //var hwrecognition = require('./routes/hwrecognition');
 var http = require('http');
 var path = require('path');
@@ -52,21 +54,31 @@ app.use(cacheManifest({
 		fallbacks: []
 }));
 
+// parse application/x-www-form-urlencoded and application/json
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
-// development only
-if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
-}
+	// development only
+	if ('development' == app.get('env')) {
+		app.use(express.errorHandler());
+	}
 
 app.get('/', routes.index);
 app.get('/editor', editor.view);
 app.get('/doclist', doclist.view);
 app.get('/download', download.view);
 app.get('/analysis', analysis.view);
+app.get('/tips', tips.view);
+
+app.post('/q_update', function (req, res) {
+	var a = req.param('resource');
+	console.dir(a);
+	res.redirect('/doclist');
+});
 
 server = http.createServer(app);
 server.listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+	console.log('Express server listening on port ' + app.get('port'));
 });
 
 

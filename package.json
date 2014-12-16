@@ -12,6 +12,7 @@
     "ejs": "*",
     "socket.io": "*",
     "request": "*",
+    "body-parser": "*",
     "async": "*",
     "forever": "*"
   }

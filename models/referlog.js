@@ -117,3 +117,25 @@
      });
  };
 
+//insert tips data
+ referlog.insertTips = function (_d, callback) {
+   db.query(
+     'UPDATE script SET'
+       + 'interview_tips = ?'
+       + 'WHERE status_flag = "1" '
+       + 'ORDER BY rectime '
+       + 'DESC '
+       + 'LIMIT 0,1 '
+       + ';',
+     [_d], 
+     function (err, results) {
+       db.end();
+       //var sid = results.insertId;
+       if (err) {
+         callback(err);
+         return;
+       }
+       callback(null);
+     });
+ };
+

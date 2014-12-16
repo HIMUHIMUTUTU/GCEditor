@@ -8,7 +8,7 @@
 	</head>
 	<body>
 		<h1><%= title %></h1>
-		<h2>summary</h2>
+		<h2>dashboard</h2>
 		<canvas id="hoge"></canvas>
 		<canvas id="hoge2"></canvas>
 		<script stype="text/javascript" src="/js/analysis.js" charset="utf-8"></script>
@@ -16,11 +16,12 @@
 		<table>
 			<tr>
 				<th>id</th>
-				<th>経過時間</th>
+			<th>経過時間</th>
 				<th>アクション</th>
 				<th>速度<br />(単位時間の打鍵数)</th>
 				<th>文章</th>
-				<th>文章文字数</th>
+				<th>字数</th>
+				<th>インタビュー<br /> (1)リソース (2)顧客の課題と機能 (3)インタラクション</th>
 			</tr>
 			<% for(var i=0; i<script.length; i++) { %>
 <tr>
@@ -30,6 +31,7 @@
 			<td><%= script[i].keycount %></td>
 			<td class='script'><%= script[i].script %></td>
 			<td><%= script[i].scriptlen %></td>
+			<td>&nbsp;</td>
 		</tr>
 	<% } %>
 	</table>

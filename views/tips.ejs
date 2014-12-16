@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+		<title><%= title %></title>
+		<link rel='stylesheet' href='/css/editor.css' />
+	</head>
+	<body>
+		<form action="./q_update" method="post">
+		<h1><%= title %></h1>
+		<p>おつかれさまでした。本日のご活動内容についてご記入ください。<br />インタビュー時のご質問の参考にさせていただくためですので、メモ程度の簡潔さで構いません。</p>
+		<p>(1)本日の活動の概要をお書きください。特に情報収集(調べ物、取材、作品に関する相談など)をされていましたらお書きください。</p>
+		<p><textarea name="resource" rows="5" cols="80"></textarea></p>
+		<p>(2)作品に関して目標のイメージや方針、満たすべきと考えられる要件をお持ちでしたらお書きください。</p>
+		<p><textarea name="goal" rows="5" cols="80"></textarea></p>
+		<p>(3)顧客となる方とコンタクトを取られたり会話をされていたら概要をお書きください。</p>
+		<p><textarea name="interaction" rows="5" cols="80"></textarea></p>
+		<p><input type="submit" value="送信"></p>
+		</form>
+	</body>
+
+</html>
