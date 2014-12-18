@@ -82,7 +82,7 @@ function MAIN(){
 			self.disableScript(data.value);
 			//if main.status_flag is 0, close window
 			if(self.status_flag == "close"){
-				location.href = "/doclist";
+				location.href = "/tips";
 				//	socket.emit('redirectRequest', {value: ""});
 			}else{
 				/** update updatetime  
@@ -165,8 +165,8 @@ MAIN.prototype.initiateEditor = function(){
 			});
 			editor.on('keyup', function (e) {  
 				self.keycount++;
-				self.monar = makeMonar(self.keycount);
-				self.keyCounter.innerHTML= self.monar;
+				//self.monar = makeMonar(self.keycount);
+				//self.keyCounter.innerHTML= self.monar;
 			});
 
 		}
@@ -287,7 +287,7 @@ MAIN.prototype.close = function(){
 		}else if(this.network == "offline"){
 			this.getScript();
 			this.saveScript();
-			location.href = "/doclist";
+			location.href = "/tips";
 		}
 	}
 }

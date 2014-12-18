@@ -1,7 +1,7 @@
 var summary = {action:[['action'],['1', 0],['2', 0],['3', 0],['4', 0],['5', 0],['6', 0]], word:[['id'],['速度(打鍵数)'],['文章文字数']], transition:[[[]]], totalaction:[]}; 
 for(var ti = 0; ti < 7; ti++){
 	for(var tii = 0; tii < 7; tii++){
-transition[ti][tii][0] = 0;
+//summary.transition[ti][tii][0] = 0;
 	}
 }
 
@@ -14,7 +14,7 @@ for(var i = script_s.length  - 1;  i >= 0; i--){
 		summary.word[0].push(script_s[i].id);
 		summary.word[1].push(script_s[i].keycount);
 		summary.word[2].push(script_s[i].scriptlen);
-		transition[lastaction][script_s[i].action][0]++;
+//		transition[lastaction][script_s[i].action][0]++;
 		lastaction = script_s[i].action;
 }
 
@@ -60,4 +60,4 @@ var chartdata2 = {
 
 	"data":summary.word
 };
-ccchart.init('hoge2', chartdata2)
+//ccchart.init('hoge2', chartdata2)

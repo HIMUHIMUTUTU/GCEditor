@@ -11,6 +11,7 @@ var doclist = require('./routes/doclist');
 var download = require('./routes/download');
 var analysis = require('./routes/analysis');
 var tips = require('./routes/tips');
+var tips_update = require('./routes/tips_update');
 //var hwrecognition = require('./routes/hwrecognition');
 var http = require('http');
 var path = require('path');
@@ -69,12 +70,7 @@ app.get('/doclist', doclist.view);
 app.get('/download', download.view);
 app.get('/analysis', analysis.view);
 app.get('/tips', tips.view);
-
-app.post('/q_update', function (req, res) {
-	var a = req.param('resource');
-	console.dir(a);
-	res.redirect('/doclist');
-});
+app.post('/tips_update', tips_update.view);
 
 server = http.createServer(app);
 server.listen(app.get('port'), function(){

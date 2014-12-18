@@ -101,9 +101,9 @@
  referlog.insertScript = function (_d, callback) {
    db.query(
      'INSERT INTO script '
-       + '(rectime, script, scriptlen, action, keycount,  modified, created, status_flag) '
+       + '(rectime, script, scriptlen, action, keycount, tips,  modified, created, status_flag) '
        + 'VALUES '
-       + '(?, ?, ?, ?, ?, NOW(), NOW(), "1")'
+       + '(?, ?, ?, ?, ?, "", NOW(), NOW(), "1")'
        + ';',
      [_d.rectime, _d.script, _d.scriptlen, _d.action, _d.keycount], 
      function (err, results) {
@@ -120,18 +120,19 @@
 //insert tips data
  referlog.insertTips = function (_d, callback) {
    db.query(
-     'UPDATE script SET'
-       + 'interview_tips = ?'
+     'UPDATE script SET '
+       + 'tips = ? '
        + 'WHERE status_flag = "1" '
        + 'ORDER BY rectime '
        + 'DESC '
-       + 'LIMIT 0,1 '
+       + 'LIMIT 1 '
        + ';',
      [_d], 
      function (err, results) {
        db.end();
        //var sid = results.insertId;
        if (err) {
+       	 console.dir(err);
          callback(err);
          return;
        }

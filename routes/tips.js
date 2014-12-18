@@ -4,5 +4,5 @@
  */
 
 exports.view = function(req, res){
-		res.reder('tips', { title: 'tips'});
+		res.render('tips', { title: 'tips'});
 };
