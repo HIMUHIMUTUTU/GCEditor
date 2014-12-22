@@ -27,6 +27,13 @@ div#infobox {
 	width:100%;
 	clear:left;
 }
+
+div#radioList {
+	visibility:visible;
+	padding: 10px;
+	border-radius: 5px;
+	background-color: #ffcccc;
+}	
 table {
 	border-collapse: collapse;
 	border: 1px #696969 solid;

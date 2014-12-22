@@ -15,17 +15,18 @@ window.onload = function() {
 
 function MAIN(){
 	this.closeButton = document.getElementById('closeButton');
-	this.radioList  = document.getElementsByName("actionRadio");
+	this.radioList = document.getElementById("radioList");
+	this.actionRadio = document.getElementsByName("actionRadio");
 	this.lineCounter = document.getElementById("lineCounter");
 	this.wordCounter = document.getElementById("wordCounter");
 	this.pageCounter = document.getElementById("pageCounter");
 	this.keyCounter = document.getElementById("keyCounter");
-	this.actionRadio = document.getElementById("actionRadio");
 	this.lastUpdate = document.getElementById("lastUpdate");
 	this.networkStatus = document.getElementById("networkStatus");
 
 	this.timer = new Timer();
 	this.looptime = 3 * 60 * 1000;
+	this.answertime = 1 * 60 * 1000;
 
 	this.pageline = 40; //40 word 40 line
 	this.lineword = 40; //40 word 40 line
@@ -46,6 +47,10 @@ function MAIN(){
 
 	//function for bottun click
 	this.closeButton.onclick  = function(event) {self.close()};
+
+	setTimeout(function(){
+		this.radioList.style.visibility = "hidden";
+	}, this.answertime);
 
 	//main loop
 	var loop = function(){
@@ -148,6 +153,7 @@ MAIN.prototype.initiateEditor = function(){
 				//linecount
 				var nl = countLine(text, self.lineword);
 				//	tinyMCE.get('script').setContent(lineBreak(htmltext,self.lineword));
+				/**
 				if(self.linecount == 0){
 					self.linecount = nl;
 				}
@@ -156,6 +162,8 @@ MAIN.prototype.initiateEditor = function(){
 					tinyMCE.get('script').setContent(pageBreak(htmltext,self.pageline));
 					self.linecount = nl;
 				}
+				**/
+				self.linecount = nl;
 				self.lineCounter.innerHTML= self.linecount;
 
 				//pagecount
@@ -165,8 +173,8 @@ MAIN.prototype.initiateEditor = function(){
 			});
 			editor.on('keyup', function (e) {  
 				self.keycount++;
-				//self.monar = makeMonar(self.keycount);
-				//self.keyCounter.innerHTML= self.monar;
+				self.monar = makeMonar(self.keycount);
+				self.keyCounter.innerHTML= self.monar;
 			});
 
 		}
@@ -194,9 +202,13 @@ MAIN.prototype.getScript = function(){
 	this.log[this.ln].script = tinyMCE.get('script').getContent();
 	this.log[this.ln].scriptlen = this.wordcount; 
 	this.log[this.ln].rectime = this.timer.gettime();
-	for(var i=0; i<this.radioList.length; i++){
-		if (this.radioList[i].checked) {
-			this.log[this.ln].action = this.radioList[i].value;
+	for(var i=0; i<this.actionRadio.length; i++){
+		if (this.actionRadio[i].checked) {
+			this.log[this.ln].action = this.actionRadio[i].value;
+			this.radioList.style.visibility = "visible";
+			setTimeout(function(){
+			this.radioList.style.visibility = "hidden";
+			}, this.answertime);
 			break;
 		}
 	}
