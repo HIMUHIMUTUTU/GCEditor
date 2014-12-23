@@ -39,6 +39,9 @@ app.use(cacheManifest({
 		prefix: '/lib/',
 		ignore: function(x) { return /\/\./.test(x); }
 	},{
+		file: __dirname + '/public/img/config/background.png',
+		path: '/img/config/background.png'
+	},{
 		file: __dirname + '/public/css/editor.css',
 		path: '/css/editor.css'
 	},{

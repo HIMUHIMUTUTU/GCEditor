@@ -69,7 +69,6 @@ function MAIN(){
 	}
 	loop();
 
-	console.log(navigator.onLine);
 	/** socket.io function **/
 	if (navigator.onLine == true) {
 		console.log(navigator.onLine);
@@ -101,6 +100,8 @@ function MAIN(){
 				console.log(data.value[0].script);
 				//self.initialLength = data.value[0].script.length;
 				tinyMCE.get('script').setContent(data.value[0].script);
+				//count content		
+				self.countContent();
 			}
 			self.status_flag = "recording";
 		});
@@ -119,57 +120,36 @@ MAIN.prototype.initiateEditor = function(){
 	var self = this;
 	tinymce.init({
 		selector: "textarea",
-		plugins: "print textcolor save wordcount",
+		plugins: "print textcolor save wordcount paste",
 		width : self.lineword + "em",
 		content_css : "css/custom_content.css",
 		fontsize_formats: "10pt 12pt 14pt 18pt 24pt 36pt",
 		custom_shortcuts : false,
+		paste_as_text: true,
 		statusbar : false,
 		height : "36em",
 		menubar : false, 
 		toolbar: [
-			"undo redo | bold italic underline strikethrough | alignleft aligncenter alignright | forecolor | fontsizeselect"
+			"undo redo | bold italic underline strikethrough | alignleft aligncenter alignright | forecolor"
 		],
 		setup : function(editor) {
 			editor.on('init', function (e) {
+				//modify css
+				//var body = editor.getBody();
+				//editor.dom.setStyle(body, "backgroundImage", "url(/img/config/background.png)");
+				//editor.dom.setStyle(body, "background-size", "100% 36em");
+
 				//load current data
 				if(self.network == "online"){
 					self.loadRemoteScript();
 				}else if(self.network == "offline"){
 					self.loadLocalScript();
 				}
+
 			});
 			editor.on('change', function (e) {  
-
-				var htmltext = "";
-				var text = "";
-				htmltext = editor.getContent();
-				text = removeHTML(htmltext);
-
-				//wordcount
-				self.wordcount = countWord(text);
-				self.wordCounter.innerHTML= self.wordcount; 
-
-				//linecount
-				var nl = countLine(text, self.lineword);
-				//	tinyMCE.get('script').setContent(lineBreak(htmltext,self.lineword));
-				/**
-				if(self.linecount == 0){
-					self.linecount = nl;
-				}
-				if(self.linecount != nl){
-					//remake page break
-					tinyMCE.get('script').setContent(pageBreak(htmltext,self.pageline));
-					self.linecount = nl;
-				}
-				**/
-				self.linecount = nl;
-				self.lineCounter.innerHTML= self.linecount;
-
-				//pagecount
-				self.pagecount = Math.floor((self.linecount - 1)/self.pageline) + 1;
-				self.pageCounter.innerHTML= self.pagecount; 
-
+				//count content		
+				self.countContent();
 			});
 			editor.on('keyup', function (e) {  
 				self.keycount++;
@@ -191,6 +171,8 @@ MAIN.prototype.loadLocalScript = function(){
 		var lcontent = common.lstorage.getItem("current");
 		lcontent = JSON.parse(lcontent);
 		tinyMCE.get('script').setContent(lcontent.script);
+		//count content		
+		self.countContent();
 	}
 	self.status_flag = "recording";
 }
@@ -213,15 +195,6 @@ MAIN.prototype.getScript = function(){
 		}
 	}
 
-	/**caluculate velocity
-	  if(this.ln == 0){
-	  console.log(this.log[this.ln].script);
-	  console.log(this.initialLength);
-	  this.log[this.ln].velocity = this.log[this.ln].script.length - this.initialLength; 
-	  }else{
-	  this.log[this.ln].velocity = this.log[this.ln].script.length - this.log[this.ln - 1].script.length;
-	  };
-	 **/
 	this.log[this.ln].keycount = this.keycount;
 	this.keycount = 0;
 	this.ln++;
@@ -304,6 +277,24 @@ MAIN.prototype.close = function(){
 	}
 }
 
+/** count each number of scrit and set it to counter **/
+MAIN.prototype.countContent = function(){
+	var text = "";
+	text = removeHTML(tinyMCE.get('script').getContent());
+	
+	//wordcount
+	this.wordcount = countWord(text);
+	this.wordCounter.innerHTML= this.wordcount; 
+
+	//linecount
+	this.linecount = countLine(text, this.lineword);
+	this.lineCounter.innerHTML= this.linecount;
+
+	//pagecount
+	this.pagecount = Math.floor((this.linecount - 1)/this.pageline) + 1;
+	this.pageCounter.innerHTML= this.pagecount; 
+}
+
 /** Recorder Object **/
 function Recorder(){
 	this.script;
@@ -313,7 +304,6 @@ function Recorder(){
 	this.keycount;
 	this.status_flag = 1;
 }
-
 
 /** Timer Object **/
 function Timer(){
@@ -350,23 +340,25 @@ function countWord(_w){
 	return cw;
 }
 
-function pageBreak(_w, _p){
+function pageBreak(_w, _p, _lw){
 	var ow = new Array();
 	var iw = _w.split("\n");
 	var linenum = 0;
 	for(var i=0; i<iw.length; i++){
 		if(!iw[i].match(/<p\sclass="break">([^<]+)<\/p>/g)){
-
-			if(linenum%_p == 0 && linenum != 0){
-				ow.push("<p class='break'> ----- page" + linenum/_p  + " ----- </p>");
-			}	
+		//if(!iw[i].match(/<hr\s\/>/g)){
 			ow.push(iw[i]);
+			linenum = linenum + Math.floor(charCount(removeHTML(iw[i]))/(2 *_lw));
 			linenum++;
-
-
-		}
+			console.log(linenum);
+				while(linenum >= _p){ 
+					ow.push("<p class='break'> ----- page" + linenum  + " ----- </p>");
+					linenum = linenum - _p;
+				}
+		}	
 	}
 	ow = ow.join("\n");
+	console.log(ow);
 	return ow;
 }
 
