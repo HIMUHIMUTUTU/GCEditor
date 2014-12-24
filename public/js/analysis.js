@@ -60,4 +60,4 @@ var chartdata2 = {
 
 	"data":summary.word
 };
-//ccchart.init('hoge2', chartdata2)
+ccchart.init('hoge2', chartdata2)
