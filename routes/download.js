@@ -12,7 +12,7 @@ exports.view = function(req, res){
 	}
 	referlog.selectScript("", 1, function(script_data){
 		console.dir(script_data);
-		var script = removeHTML(script_data[0].script);
+		var script = createText(script_data[0].script);
 		res.statusCode = 200;
 		res.setHeader('Content-disposition', 'attachment; filename=hoge.txt');
 		res.setHeader('Content-Type', 'text/plain');
@@ -21,9 +21,9 @@ exports.view = function(req, res){
 	});
 };
 
-function removeHTML(_w){
+function createText(_w){
 	var rw = _w.replace(/<p\sclass="break">([^<]+)<\/p>\n/g,"");
-	var rw = rw.replace(/(<([^>]+)>)/ig,"").replace(/&nbsp;/g,"");
+	var rw = rw.replace(/(<([^>]+)>)/ig,"").replace(/&nbsp;/g,"").replace(/\n/g,"\r\n");
 	//	var rw = _w.replace(/(<([^>]+)>)/ig,"");
 	return rw;
 }
