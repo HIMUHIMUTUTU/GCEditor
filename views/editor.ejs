@@ -11,36 +11,35 @@
 	</head>
 	<body>
 		<div id="container">
-		<form method="post">
-		<div id="editorbox">
-			<textarea id="script"></textarea>
-		</div>
-		<div id="infobox">
-		<div><span id="keyCounter"></span></div>
-		<div>字数:<span id="wordCounter">-</span>文字  <span id="lineCounter">-</span>行  <span id="pageCounter">-</span>ページ</div>	
-		<div id="actionRadioRequest"></div>
-		<div id="radioList">
-			<font color="#ff0000">現在の状態に最も近いものを選択(更新)してください。</font>
-			<ul>
-				<li><input type="radio" id="action1" name="actionRadio" value="1">1 analysis: 顧客が何を求めているか分析しています。(仮) </li>
-				<li><input type="radio" id="action2" name="actionRadio" value="2">2 design: 作るべきものを構想しています。(仮) </li>
-				<li><input type="radio" id="action3" name="actionRadio" value="3">3 develop: 構想に基づいて開発をしています。(仮) </li>
-				<li><input type="radio" id="action4" name="actionRadio" value="4">4 test: 開発したものに間違いがないか確認しています。(仮) </li>
-				<li><input type="radio" id="action5" name="actionRadio" value="5">5 fuctional exploration: 開発したものが誰にとってどのような価値があるのか考えています。(仮) </li>
-				<li><input type="radio" id="action5" name="actionRadio" value="6" checked>6 other: 上記のどれも行っていません。 </li>
-			</ul>
+			<form method="post">
+				<div id="editorbox">
+					<textarea id="script"></textarea>
+				</div>
 
-		</div>
-		<div>&nbsp;</div>
-		<div>&nbsp;</div>
-		<div>
-			<input type="button" id="closeButton" value="保存して終了する">
-		</div>
-		<div>最終保存時刻:<span id = "lastUpdate"></span></div>
-		<div>ネットワーク:<span id = "networkStatus"></span></div>
-		</div>
-		<div id="clearbox"></div>
-		</form>
+				<div id="infobox">
+					<div><span id="keyCounter"></span></div>
+					<div>字数:<span id="wordCounter">-</span>文字  <span id="lineCounter">-</span>行  <span id="pageCounter">-</span>ページ</div>	
+					<div><input type="button" id="closeButton" value="保存して終了する"></div>
+					<div>最終保存時刻:<span id = "lastUpdate"></span></div>
+					<div>ネットワーク:<span id = "networkStatus"></span></div>
+					<div>&nbsp;</div>
+					<div>&nbsp;</div>
+					<div id="actionRadioRequest"></div>
+					<div id="radioList">
+						<font color="#ff0000">現在の状態に最も近いものを選択(更新)してください。</font>
+						<ul>
+							<li><input type="radio" id="action1" name="actionRadio" value="1">1 analysis: 顧客が何を求めているか分析しています。(仮) </li>
+							<li><input type="radio" id="action2" name="actionRadio" value="2">2 design: 作るべきものを構想しています。(仮) </li>
+							<li><input type="radio" id="action3" name="actionRadio" value="3">3 develop: 構想に基づいて開発をしています。(仮) </li>
+							<li><input type="radio" id="action4" name="actionRadio" value="4">4 test: 開発したものに間違いがないか確認しています。(仮) </li>
+							<li><input type="radio" id="action5" name="actionRadio" value="5">5 fuctional exploration: 開発したものが誰にとってどのような価値があるのか考えています。(仮) </li>
+							<li><input type="radio" id="action5" name="actionRadio" value="6" checked>6 other: 上記のどれも行っていません。 </li>
+						</ul>
+
+					</div>
+				</div>
+				<div id="clearbox"></div>
+			</form>
 		</div>
 	</body>
 
