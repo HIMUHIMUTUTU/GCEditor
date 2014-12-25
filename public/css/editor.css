@@ -29,7 +29,7 @@ div#infobox {
 }
 
 div#radioList {
-	visibility:visible;
+	visibility: hidden;
 	padding: 10px;
 	border-radius: 5px;
 	background-color: #ffcccc;

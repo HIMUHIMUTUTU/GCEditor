@@ -1,4 +1,4 @@
-var summary = {action:[['action'],['1', 0],['2', 0],['3', 0],['4', 0],['5', 0],['6', 0]], word:[['id'],['速度(打鍵数)'],['文章文字数']], transition:[[[]]], totalaction:[]}; 
+var summary = {action:[['action'],['0', 0],['1', 0],['2', 0],['3', 0],['4', 0],['5', 0],['6', 0]], word:[['id'],['速度(打鍵数)'],['文章文字数']], transition:[[[]]], totalaction:[]}; 
 for(var ti = 0; ti < 7; ti++){
 	for(var tii = 0; tii < 7; tii++){
 //summary.transition[ti][tii][0] = 0;
@@ -7,8 +7,8 @@ for(var ti = 0; ti < 7; ti++){
 
 var lastaction;
 for(var i = script_s.length  - 1;  i >= 0; i--){
-	for(var ai = 1; ai < 7; ai++){
-		if(script_s[i].action == ai){summary.action[ai][1]++;}
+	for(var ai = 0; ai < 7; ai++){
+		if(script_s[i].action == ai){summary.action[ai + 1][1]++;}
 		
 	}
 		summary.word[0].push(script_s[i].id);
@@ -18,7 +18,7 @@ for(var i = script_s.length  - 1;  i >= 0; i--){
 		lastaction = script_s[i].action;
 }
 
-	for(var ati = 1; ati < 7; ati++){
+	for(var ati = 0; ati < 7; ati++){
 		
 		
 	}

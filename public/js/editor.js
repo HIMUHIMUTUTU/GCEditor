@@ -16,6 +16,7 @@ window.onload = function() {
 function MAIN(){
 	this.closeButton = document.getElementById('closeButton');
 	this.radioList = document.getElementById("radioList");
+	this.radioTitle = document.getElementById("radioTitle");
 	this.actionRadio = document.getElementsByName("actionRadio");
 	this.lineCounter = document.getElementById("lineCounter");
 	this.wordCounter = document.getElementById("wordCounter");
@@ -26,7 +27,7 @@ function MAIN(){
 
 	this.timer = new Timer();
 	this.looptime = 15 * 60 * 1000;
-	this.answertime = 1 * 60 * 1000;
+	this.answertime = 3 * 60 * 1000;
 
 	this.pageline = 40; //40 word 40 line
 	this.lineword = 40; //40 word 40 line
@@ -45,18 +46,17 @@ function MAIN(){
 	this.status_flag = "prepare";
 	var self = this;
 
+	this.prepareList();
+
 	//function for bottun click
 	this.closeButton.onclick  = function(event) {self.close()};
-
-	setTimeout(function(){
-		this.radioList.style.visibility = "hidden";
-	}, this.answertime);
 
 	//main loop
 	var loop = function(){
 		console.log(self.status_flag);
 		if(self.status_flag == "recording"){
 			self.getScript();		
+			self.prepareList();
 			if(self.network == "online"){
 				self.clearLocalScript();
 				self.sendScript();
@@ -73,6 +73,7 @@ function MAIN(){
 	if (navigator.onLine == true) {
 		console.log(navigator.onLine);
 		common.socket = io.connect();
+
 		common.socket.on('connect', function(msg) {
 			self.network= "online";
 			self.networkStatus.innerHTML= "<font color = 'blue'>接続中</font>"; 
@@ -80,26 +81,24 @@ function MAIN(){
 			//authentication
 			common.socket.emit('auth', clientinfo);
 		});
+
 		//receive record success notification from server
 		common.socket.on('savedScriptId', function(data) {
-			console.dir(data);
 			self.disableScript(data.value);
+			self.lastUpdate.innerHTML= self.timer.getCal();
 			//if main.status_flag is 0, close window
 			if(self.status_flag == "close"){
 				location.href = "/tips";
-				//	socket.emit('redirectRequest', {value: ""});
-			}else{
-				/** update updatetime  
-				  var updatetime = this.timer.gettime;
-				 **/
 			}
 		});
+
 		common.socket.on('loadedScript', function(data) {
 			console.dir(data);
 			if(data.value.length != 0){
 				console.log(data.value[0].script);
 				//self.initialLength = data.value[0].script.length;
 				tinyMCE.get('script').setContent(data.value[0].script);
+				self.lastUpdate.innerHTML= self.timer.getCal();
 				//count content		
 				self.countContent();
 			}
@@ -187,14 +186,10 @@ MAIN.prototype.getScript = function(){
 	for(var i=0; i<this.actionRadio.length; i++){
 		if (this.actionRadio[i].checked) {
 			this.log[this.ln].action = this.actionRadio[i].value;
-			this.radioList.style.visibility = "visible";
-			setTimeout(function(){
-			this.radioList.style.visibility = "hidden";
-			}, this.answertime);
+			this.actionRadio[i].checked = false;
 			break;
 		}
 	}
-
 	this.log[this.ln].keycount = this.keycount;
 	this.keycount = 0;
 	this.ln++;
@@ -295,12 +290,21 @@ MAIN.prototype.countContent = function(){
 	this.pageCounter.innerHTML= this.pagecount; 
 }
 
+MAIN.prototype.prepareList = function(){
+	this.radioList.style.visibility = "hidden";
+	var self = this;
+	setTimeout(function(){
+		self.radioTitle.innerHTML= "<font color='#ff0000'>この" + self.looptime/(60 * 1000) + "分の活動を振り返り、最も注力したと思うものにチェックをしてください。</font>";
+		self.radioList.style.visibility = "visible";
+	}, (this.looptime - this.answertime));
+}
+
 /** Recorder Object **/
 function Recorder(){
 	this.script;
 	this.scriptlen;
 	this.rectime;
-	this.action;
+	this.action = 0;
 	this.keycount;
 	this.status_flag = 1;
 }
@@ -316,6 +320,24 @@ Timer.prototype.gettime = function(){
 	var currenttime = date.getTime();
 	return currenttime;
 };
+
+Timer.prototype.getCal = function(){
+	var now =new Date();
+	var year = now.getYear(); // 年
+	var month = now.getMonth() + 1; // 月
+	var day = now.getDate(); // 日
+	var hour = now.getHours(); // 時
+	var min = now.getMinutes(); // 分
+	var sec = now.getSeconds(); // 秒
+	if(year < 2000) { year += 1900; }
+	if(month < 10) { month = "0" + month; }
+	if(day < 10) { day = "0" + day; }
+	if(hour < 10) { hour = "0" + hour; }
+	if(min < 10) { min = "0" + min; }
+	if(sec < 10) { sec = "0" + sec; }
+	var cal = year + "/" + month + "/" + day + " " + hour + ":" + min + ":" + sec;
+	return cal;
+}
 
 function removeHTML(_w){
 	var rw = _w.replace(/<p\sclass="break">([^<]+)<\/p>\n/g,"");
