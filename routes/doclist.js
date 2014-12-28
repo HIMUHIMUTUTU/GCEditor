@@ -4,5 +4,10 @@
  */
 
 exports.view = function(req, res){
-  res.render('doclist', { title: 'documents' });
+	if(req.query.u){
+		res.render('doclist', { title: 'documents', user: req.query.u });
+	}else{
+		res.render('caution');
+	}
+
 };

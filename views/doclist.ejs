@@ -7,7 +7,7 @@
   <body>
 <h1><%= title %></h1>
     <p>ドキュメントの一覧です。</p>
-    <p><a href="/editor">ファイル1</a> | <a href="/download" target="_blank">ダウンロード</a></p>
+    <p><a href="/editor?u=<%= user %>">ファイル1</a> | <a href="/download?u=<%= user %>" target="_blank">ダウンロード</a></p>
     <p>※同時に2つのタブで開かないようにご注意ください。</p>
     <p>※ダウンロードは書式は保存されません。また特殊文字は保存されません。</p>
   </body>

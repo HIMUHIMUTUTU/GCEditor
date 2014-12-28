@@ -78,12 +78,12 @@
      'SELECT * '
 	   + 'FROM script '
        //+ 'WHERE id =  ? '
-       + 'WHERE status_flag = "1" '
+       + 'WHERE status_flag = "1" AND user = ? '
        + 'ORDER BY rectime '
        + 'DESC '
        + 'LIMIT 0,? '
        + ';',
-     [_n],
+     [_u, _n],
      function (err, results, fields) {
        db.end();
        //var sid = results.insertId;
@@ -101,11 +101,11 @@
  referlog.insertScript = function (_d, callback) {
    db.query(
      'INSERT INTO script '
-       + '(rectime, script, scriptlen, action, keycount, tips,  modified, created, status_flag) '
+       + '(rectime, script, scriptlen, action, keycount, tips, user, modified, created, status_flag) '
        + 'VALUES '
-       + '(?, ?, ?, ?, ?, "", NOW(), NOW(), "1")'
+       + '(?, ?, ?, ?, ?, "", ?, NOW(), NOW(), "1")'
        + ';',
-     [_d.rectime, _d.script, _d.scriptlen, _d.action, _d.keycount], 
+     [_d.rectime, _d.script, _d.scriptlen, _d.action, _d.keycount, _d.user], 
      function (err, results) {
        db.end();
        //var sid = results.insertId;
@@ -118,16 +118,16 @@
  };
 
 //insert tips data
- referlog.insertTips = function (_d, callback) {
+ referlog.insertTips = function (_u, _d, callback) {
    db.query(
      'UPDATE script SET '
        + 'tips = ? '
-       + 'WHERE status_flag = "1" '
+       + 'WHERE status_flag = "1" AND user = ? '
        + 'ORDER BY rectime '
        + 'DESC '
        + 'LIMIT 1 '
        + ';',
-     [_d], 
+     [_d, _u], 
      function (err, results) {
        db.end();
        //var sid = results.insertId;

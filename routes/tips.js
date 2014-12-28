@@ -4,5 +4,9 @@
  */
 
 exports.view = function(req, res){
-		res.render('tips', { title: 'tips'});
+	if(req.query.u){
+		res.render('tips', { title: 'tips', user: req.query.u});
+	}else{
+		res.render('caution');
+	}
 };

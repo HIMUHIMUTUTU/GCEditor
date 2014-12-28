@@ -1,6 +1,6 @@
 
 var common = {
-	socket: null, lstorage: localStorage
+	socket: null, lstorage: localStorage, user: guser
 };
 
 /** socket action **/
@@ -88,7 +88,7 @@ function MAIN(){
 			self.lastUpdate.innerHTML= self.timer.getCal();
 			//if main.status_flag is 0, close window
 			if(self.status_flag == "close"){
-				location.href = "/tips";
+				location.href = "/tips?u=" + common.user;
 			}
 		});
 
@@ -161,7 +161,7 @@ MAIN.prototype.initiateEditor = function(){
 }
 
 MAIN.prototype.loadRemoteScript = function(){
-	common.socket.emit('loadRequest', {value: ""});
+	common.socket.emit('loadRequest', {value: common.user});
 }
 
 MAIN.prototype.loadLocalScript = function(){
@@ -267,7 +267,7 @@ MAIN.prototype.close = function(){
 		}else if(this.network == "offline"){
 			this.getScript();
 			this.saveScript();
-			location.href = "/tips";
+			location.href = "/tips?u=" + common.user;
 		}
 	}
 }
@@ -296,6 +296,7 @@ MAIN.prototype.prepareList = function(){
 	setTimeout(function(){
 		self.radioTitle.innerHTML= "<font color='#ff0000'>この" + self.looptime/(60 * 1000) + "分の活動を振り返り、最も注力したと思うものにチェックをしてください。</font>";
 		self.radioList.style.visibility = "visible";
+		document.getElementById('popList').play();
 	}, (this.looptime - this.answertime));
 }
 
@@ -306,6 +307,7 @@ function Recorder(){
 	this.rectime;
 	this.action = 0;
 	this.keycount;
+	this.user = common.user;
 	this.status_flag = 1;
 }
 

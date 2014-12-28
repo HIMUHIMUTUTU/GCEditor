@@ -3,7 +3,9 @@
 	<head>
 		<meta charset="UTF-8">
 		<title><%= title %></title>
+		<script> var guser = <%- JSON.stringify(user) %>;</script>
 		<link rel='stylesheet' href='/css/editor.css' />
+		<audio id="popList" src="/audio/ping.mp3" preload="auto"></audio>
 		<!-- <script type="text/javascript" src="/js/jquery-1.11.0.min.js"></script> -->
 		<script type="text/javascript" src="/lib/tinymce/tinymce.js"></script> 
 		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
@@ -28,12 +30,12 @@
 					<div id="radioList">
 						<span id="radioTitle"></span>
 						<ul>
-							<li><input type="radio" id="action1" name="actionRadio" value="1">1: 顧客が何を求めているか考え・分析しています。 </li>
-							<li><input type="radio" id="action2" name="actionRadio" value="2">2: 作成べき内容をどうするか構想しています。</li>
-							<li><input type="radio" id="action3" name="actionRadio" value="3">3: 構想に基づき手を動かして作成をしています。 </li>
-							<li><input type="radio" id="action4" name="actionRadio" value="4">4: 創作したものに間違いがないか、自分の構想通りかを確認しています。 </li>
+							<li><input type="radio" id="action1" name="actionRadio" value="1">1: 顧客が何を求めているか考えています。 </li>
+							<li><input type="radio" id="action2" name="actionRadio" value="2">2: 作成すべき内容をどうするか構想しています。</li>
+							<li><input type="radio" id="action3" name="actionRadio" value="3">3: 構想は決まっていて、それに基づき手を動かして作成をしています。 </li>
+							<li><input type="radio" id="action4" name="actionRadio" value="4">4: 創作したものに間違いがないか自分の構想通りかをチェックしています。 </li>
 							<li><input type="radio" id="action5" name="actionRadio" value="5">5: 創作したものが誰にとってどのような意味や価値があるのか考えています。 </li>
-							<li><input type="radio" id="action5" name="actionRadio" value="6">6: 上記のどれにも該当していません。 </li>
+							<li><input type="radio" id="action5" name="actionRadio" value="6">6: 上記のどれにも該当しない創作に関係する活動をしています。 </li>
 							<li><input type="radio" id="action5" name="actionRadio" value="7">7: 創作とは全く関係のないことをしています。 </li>
 						</ul>
 

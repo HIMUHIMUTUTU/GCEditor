@@ -4,5 +4,9 @@
  */
 
 exports.view= function(req, res){
-  res.render('editor', { title: 'Editor' });
+	if(req.query.u){
+		res.render('editor', { title: 'Editor', user: req.query.u});
+	}else{
+		res.render('caution');
+	}
 };

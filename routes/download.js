@@ -7,18 +7,18 @@ var referlog = require('../models/referlog');
 
 exports.view = function(req, res){
 	if(req.query.u){
+		referlog.selectScript(req.query.u, 1, function(script_data){
+			console.dir(script_data);
+			var script = createText(script_data[0].script);
+			res.statusCode = 200;
+			res.setHeader('Content-disposition', 'attachment; filename=hoge.txt');
+			res.setHeader('Content-Type', 'text/plain');
+			res.send(script);
+			res.end;
+		});
 	}else{
-		console.log("no user");
+		res.render('caution');
 	}
-	referlog.selectScript("", 1, function(script_data){
-		console.dir(script_data);
-		var script = createText(script_data[0].script);
-		res.statusCode = 200;
-		res.setHeader('Content-disposition', 'attachment; filename=hoge.txt');
-		res.setHeader('Content-Type', 'text/plain');
-		res.send(script);
-		res.end;
-	});
 };
 
 function createText(_w){
