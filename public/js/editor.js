@@ -152,8 +152,8 @@ MAIN.prototype.initiateEditor = function(){
 			});
 			editor.on('keyup', function (e) {  
 				self.keycount++;
-				self.monar = makeMonar(self.keycount);
-				self.keyCounter.innerHTML= self.monar;
+				//self.monar = makeMonar(self.keycount);
+				//self.keyCounter.innerHTML= self.monar;
 			});
 
 		}
@@ -171,9 +171,9 @@ MAIN.prototype.loadLocalScript = function(){
 		lcontent = JSON.parse(lcontent);
 		tinyMCE.get('script').setContent(lcontent.script);
 		//count content		
-		self.countContent();
+		this.countContent();
 	}
-	self.status_flag = "recording";
+	this.status_flag = "recording";
 }
 
 /** get script **/
