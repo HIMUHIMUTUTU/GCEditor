@@ -134,9 +134,12 @@ MAIN.prototype.initiateEditor = function(){
 		setup : function(editor) {
 			editor.on('init', function (e) {
 				//modify css
-				//var body = editor.getBody();
-				//editor.dom.setStyle(body, "backgroundImage", "url(/img/config/background.png)");
-				//editor.dom.setStyle(body, "background-size", "100% 36em");
+				var body = editor.getBody();
+				editor.dom.setStyle(body, "margin", "0 10px");
+				editor.dom.setStyle(body, "font-size", "14px");
+				editor.dom.setStyle(body, "line-height", "2em");
+				editor.dom.setStyle(body, "background-image", "url(/img/config/background.png)");
+				editor.dom.setStyle(body, "background-size", "80em");
 
 				//load current data
 				if(self.network == "online"){
@@ -172,6 +175,8 @@ MAIN.prototype.loadLocalScript = function(){
 		tinyMCE.get('script').setContent(lcontent.script);
 		//count content		
 		this.countContent();
+		this.lastUpdate.innerHTML= this.timer.getCal();
+		this.networkStatus.innerHTML= "<font color='red'>接続なし (データは一時的にPCに保存されますが、オンライン利用をおすすめします)</font>"; 
 	}
 	this.status_flag = "recording";
 }

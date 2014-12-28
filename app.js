@@ -42,6 +42,9 @@ app.use(cacheManifest({
 		file: __dirname + '/public/img/config/background.png',
 		path: '/img/config/background.png'
 	},{
+		file: __dirname + '/public/audio/ping.mp3',
+		path: '/audio/ping.mp3'
+	},{
 		file: __dirname + '/public/css/editor.css',
 		path: '/css/editor.css'
 	},{
