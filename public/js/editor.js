@@ -121,7 +121,7 @@ MAIN.prototype.initiateEditor = function(){
 		selector: "textarea",
 		plugins: "print textcolor save wordcount paste",
 		width : self.lineword + "em",
-		content_css : "css/custom_content.css",
+		//content_css : "css/custom_content.css",
 		fontsize_formats: "10pt 12pt 14pt 18pt 24pt 36pt",
 		custom_shortcuts : false,
 		paste_as_text: true,
@@ -133,14 +133,15 @@ MAIN.prototype.initiateEditor = function(){
 		],
 		setup : function(editor) {
 			editor.on('init', function (e) {
-				//modify css
+				/**modify css
 				var body = editor.getBody();
 				console.log(body);
-				//editor.dom.setStyle(body, "margin", "0 10px");
-				//editor.dom.setStyle(body, "font-size", "14px");
-				//editor.dom.setStyle(body, "line-height", "2em");
-				//editor.dom.setStyle(body, "background-image", "url(/img/config/background.png)");
-				//editor.dom.setStyle(body, "background-size", "80em");
+				editor.dom.setStyle(body, "margin", "0 10px");
+				editor.dom.setStyle(body, "font-size", "14px");
+				editor.dom.setStyle(body, "line-height", "2em");
+				editor.dom.setStyle(body, "background-image", "url(/img/config/background.png)");
+				editor.dom.setStyle(body, "background-size", "80em");
+				**/
 
 				//load current data
 				if(self.network == "online"){

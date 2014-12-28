@@ -1,12 +1,14 @@
-/**
 body {
+	
 	margin:0 10px;
 	font-size: 14px;
 	line-height: 2em;
 	background-image: url(/img/config/background.png);
 	background-size: 80em;
+
 }
+
 p {
 	margin:0;
 }
-**/
+
