@@ -26,8 +26,8 @@ function MAIN(){
 	this.networkStatus = document.getElementById("networkStatus");
 
 	this.timer = new Timer();
-	this.looptime = 1 * 60 * 1000;
-	this.answertime = 1 * 30 * 1000;
+	this.looptime = 15 * 60 * 1000;
+	this.answertime = 3 * 60 * 1000;
 
 	this.pageline = 40; //40 word 40 line
 	this.lineword = 40; //40 word 40 line
@@ -121,7 +121,7 @@ MAIN.prototype.initiateEditor = function(){
 		selector: "textarea",
 		plugins: "print textcolor save wordcount paste",
 		width : self.lineword + "em",
-		//content_css : "css/custom_content.css",
+		content_css : "css/custom_content.css",
 		fontsize_formats: "10pt 12pt 14pt 18pt 24pt 36pt",
 		custom_shortcuts : false,
 		paste_as_text: true,
