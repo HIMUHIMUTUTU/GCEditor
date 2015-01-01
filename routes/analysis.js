@@ -11,6 +11,7 @@ exports.view = function(req, res){
 			console.dir(script_data);
 			for(var i = 0; i < script_data.length; i++){
 				script_data[i].script = removeHTML(script_data[i].script);
+				script_data[i].recclock = new Date(script_data[i].rectime); 
 				script_data[i].rectime = Math.floor((script_data[i].rectime - script_data[script_data.length - 1].rectime)/1000);
 			}
 			res.render('analysis', { title: 'analysis', script: script_data });

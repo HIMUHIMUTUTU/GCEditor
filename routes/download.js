@@ -8,13 +8,16 @@ var referlog = require('../models/referlog');
 exports.view = function(req, res){
 	if(req.query.u){
 		referlog.selectScript(req.query.u, 1, function(script_data){
-			console.dir(script_data);
-			var script = createText(script_data[0].script);
-			res.statusCode = 200;
-			res.setHeader('Content-disposition', 'attachment; filename=hoge.txt');
-			res.setHeader('Content-Type', 'text/plain');
-			res.send(script);
-			res.end;
+			if(script_data.length != 0){
+				var script = createText(script_data[0].script);
+				res.statusCode = 200;
+				res.setHeader('Content-disposition', 'attachment; filename=hoge.txt');
+				res.setHeader('Content-Type', 'text/plain');
+				res.send(script);
+				res.end;
+			}else{
+		res.render('caution');
+			}
 		});
 	}else{
 		res.render('caution');

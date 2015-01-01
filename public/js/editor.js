@@ -26,7 +26,7 @@ function MAIN(){
 	this.networkStatus = document.getElementById("networkStatus");
 
 	this.timer = new Timer();
-	this.looptime = 15 * 60 * 1000;
+	this.looptime = 10 * 60 * 1000;
 	this.answertime = 3 * 60 * 1000;
 
 	this.pageline = 40; //40 word 40 line

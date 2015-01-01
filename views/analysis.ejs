@@ -40,6 +40,7 @@
 		<table>
 			<tr>
 				<th>id</th>
+			<th>時刻</th>
 			<th>経過時間</th>
 				<th>アクション</th>
 				<th>速度<br />(単位時間の打鍵数)</th>
@@ -50,6 +51,7 @@
 			<% for(var i=0; i<script.length; i++) { %>
 <tr>
 			<td><%= script.length - i %></td>
+			<td><%= script[i].recclock %></td>
 			<td><%= script[i].rectime %></td>
 			<td><%= script[i].action %></td>
 			<td><%= script[i].keycount %></td>
