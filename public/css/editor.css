@@ -41,6 +41,9 @@ table {
 td, th {
 	border: 1px #696969 solid;
 }
+td.transition, th.transition {
+	width: 50px;
+}
 td.script {
 	width: 40%;
 }

@@ -10,38 +10,39 @@
 		<h1><%= title %></h1>
 		<h2>dashboard</h2>
 		<center>
-		<canvas id="hoge"></canvas>
-		<table>
-			<tr>
-			<th>from / to</th>
-			<th>1</th>
-			<th>2</th>
-			<th>3</th>
-			<th>4</th>
-			<th>5</th>
-			<th>6</th>
-			</tr>
-			<% for(var i=1; i<7; i++) { %>
-		<tr>
-			<td><%= i %></td>
-			<td> 0 (0 %)</td>
-			<td> 0 (0 %)</td>
-			<td> 0 (0 %)</td>
-			<td> 0 (0 %)</td>
-			<td> 0 (0 %)</td>
-			<td> 0 (0 %)</td>
-			</tr>
-	<% } %>
-	</table>
-		<canvas id="hoge2"></canvas>
+			<canvas id="hoge"></canvas>
+			start: <%= script[transition.length - 1].action %> end:<%= script[0].action %>
+			<table>
+				<tr>
+					<th>from / to</th>
+				<% for(var lj=0; lj<transition.length; lj++) { %>
+				<th><%= lj %></th>
+				<% } %>
+				<th>total</th>
+				</tr>
+				
+				<% for(var i=0; i<transition.length; i++) { %>
+				<% var alltrans = 0; for(var ij=0; ij<transition[i].length; ij++) { alltrans += transition[i][ij]; }%>
+
+				<tr>
+					<td><%= i %></td>
+					<% for(var j=0; j<transition[i].length; j++) { %>
+
+					<td class="transition"><% if(alltrans != 0 && transition[i][j] != 0 ){ %><%= transition[i][j] %>(<%= Math.round(transition[i][j] / alltrans * 100)/100 %>)<% }else{ %>-<% } %></td>
+					<% } %>
+					<td class="transition"><%= alltrans %></td>
+				</tr>
+				<% } %>
+			</table>
+			<canvas id="hoge2"></canvas>
 		</center>
-	<script stype="text/javascript" src="/js/analysis.js" charset="utf-8"></script>
+		<script stype="text/javascript" src="/js/analysis.js" charset="utf-8"></script>
 		<h2>log</h2>
 		<table>
 			<tr>
 				<th>id</th>
-			<th>時刻</th>
-			<th>経過時間</th>
+				<th>時刻</th>
+				<th>経過時間</th>
 				<th>アクション</th>
 				<th>速度<br />(単位時間の打鍵数)</th>
 				<th>文章</th>
