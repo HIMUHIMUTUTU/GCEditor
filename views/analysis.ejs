@@ -11,7 +11,7 @@
 		<h2>dashboard</h2>
 		<center>
 			<canvas id="hoge"></canvas>
-			start: <%= script[transition.length - 1].action %> end:<%= script[0].action %>
+			start: <% if(typeof script == "undefined"){ %><%= script[transition.length - 1].action %><% } %> <% if(typeof script == "undefined"){ %>end:<%= script[0].action %><% } %>
 			<table>
 				<tr>
 					<th>from / to</th>
