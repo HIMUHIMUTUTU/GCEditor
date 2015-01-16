@@ -214,6 +214,7 @@ MAIN.prototype.clearLocalScript = function(){
 			this.log[this.ln].scriptlen = lcontent[i].scriptlen;
 			this.log[this.ln].rectime = lcontent[i].rectime;
 			this.log[this.ln].action = lcontent[i].action;
+			this.log[this.ln].user = lcontent[i].user;
 			this.log[this.ln].keycount = lcontent[i].keycount;
 			this.log[this.ln].status_flag = lcontent[i].status_flag;
 			common.lstorage.removeItem(common.lstorage.key(i));

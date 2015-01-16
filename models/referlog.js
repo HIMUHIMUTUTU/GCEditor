@@ -83,7 +83,7 @@
        + 'DESC '
        + 'LIMIT 0,? '
        + ';',
-     [_u, _n],
+     [_u, +_n],
      function (err, results, fields) {
        db.end();
        //var sid = results.insertId;

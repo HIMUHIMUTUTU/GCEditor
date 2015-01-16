@@ -56,7 +56,22 @@
 			<td><%= script[i].rectime %></td>
 			<td><%= script[i].action %></td>
 			<td><%= script[i].keycount %></td>
-			<td class='script'><%= script[i].script %></td>
+			<td class='script'>
+			<% if(i != script.length - 1){ for(var ai= 0; ai < script[i].add.length; ai++){%>
+			<font color='red'>
+			<%- script[i].add[ai] %>
+			</font>
+			
+			<% } %>
+			<% }else{ %>
+			<%- script[i].add %>
+			<% } %>
+			<% for(var ri= 0; ri < script[i].remove.length; ri++){%>
+			<font color='blue'>
+			<%- script[i].remove[ri] %>
+			</font>
+			<% } %>
+			</td>
 			<td><%= script[i].scriptlen %></td>
 			<td><%= script[i].tips %></td>
 		</tr>
