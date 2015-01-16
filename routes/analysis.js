@@ -61,7 +61,7 @@ var diff = new Array();
 			}
 		}
 		if(dup == 0){
-			diff.push(ai + "line:" + removeHTML(_a[ai]))
+			diff.push(ai + " : " + removeHTML(_a[ai]))
 		}
 	}
 	return diff;
