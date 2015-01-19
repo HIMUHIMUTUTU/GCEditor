@@ -26,11 +26,12 @@ function MAIN(){
 	this.networkStatus = document.getElementById("networkStatus");
 
 	this.timer = new Timer();
+
 	this.looptime = 10 * 60 * 1000;
 	this.answertime = 3 * 60 * 1000;
 
-	this.pageline = 40; //40 word 40 line
-	this.lineword = 40; //40 word 40 line
+	this.pageline = 26; //26 line
+	this.lineword = 40; //40 word
 
 	this.linecount = 0;
 	this.wordcount = 0;
@@ -71,9 +72,8 @@ function MAIN(){
 
 	/** socket.io function **/
 	if (navigator.onLine == true) {
-		console.log(navigator.onLine);
+		console.log("CONNECTING NETWORK..");
 		common.socket = io.connect();
-
 		common.socket.on('connect', function(msg) {
 			self.network= "online";
 			self.networkStatus.innerHTML= "<font color = 'blue'>接続中</font>"; 
@@ -93,9 +93,7 @@ function MAIN(){
 		});
 
 		common.socket.on('loadedScript', function(data) {
-			console.dir(data);
 			if(data.value.length != 0){
-				console.log(data.value[0].script);
 				//self.initialLength = data.value[0].script.length;
 				tinyMCE.get('script').setContent(data.value[0].script);
 				self.lastUpdate.innerHTML= self.timer.getCal();
@@ -134,20 +132,23 @@ MAIN.prototype.initiateEditor = function(){
 		setup : function(editor) {
 			editor.on('init', function (e) {
 				/**modify css
-				var body = editor.getBody();
-				console.log(body);
-				editor.dom.setStyle(body, "margin", "0 10px");
-				editor.dom.setStyle(body, "font-size", "14px");
-				editor.dom.setStyle(body, "line-height", "2em");
-				editor.dom.setStyle(body, "background-image", "url(/img/config/background.png)");
-				editor.dom.setStyle(body, "background-size", "80em");
-				**/
+				  var body = editor.getBody();
+				  console.log(body);
+				  editor.dom.setStyle(body, "margin", "0 10px");
+				  editor.dom.setStyle(body, "font-size", "14px");
+				  editor.dom.setStyle(body, "line-height", "2em");
+				  editor.dom.setStyle(body, "background-image", "url(/img/config/background.png)");
+				  editor.dom.setStyle(body, "background-size", "80em");
+				 **/
 
 				//load current data
-				if(self.network == "online"){
-					self.loadRemoteScript();
-				}else if(self.network == "offline"){
+				if(common.lstorage.getItem("current")){
 					self.loadLocalScript();
+				}else if(self.network == "online"){
+					self.loadRemoteScript();
+				}
+				if(self.network == "offline"){
+					self.networkStatus.innerHTML= "<font color='red'>接続なし (データは一時的にPCに保存されますが、オンライン利用をおすすめします)</font>"; 
 				}
 
 			});
@@ -170,7 +171,6 @@ MAIN.prototype.loadRemoteScript = function(){
 }
 
 MAIN.prototype.loadLocalScript = function(){
-	console.log(common.lstorage.getItem("current"));	
 	if(common.lstorage.getItem("current")){
 		var lcontent = common.lstorage.getItem("current");
 		lcontent = JSON.parse(lcontent);
@@ -178,7 +178,6 @@ MAIN.prototype.loadLocalScript = function(){
 		//count content		
 		this.countContent();
 		this.lastUpdate.innerHTML= this.timer.getCal();
-		this.networkStatus.innerHTML= "<font color='red'>接続なし (データは一時的にPCに保存されますが、オンライン利用をおすすめします)</font>"; 
 	}
 	this.status_flag = "recording";
 }
@@ -203,7 +202,8 @@ MAIN.prototype.getScript = function(){
 }
 
 MAIN.prototype.clearLocalScript = function(){
-	for(var i = 0; i < common.lstorage.length; i++){
+	var lslen = common.lstorage.length;
+	for(var i = 0; i < lslen; i++){
 		var lcontent = new Array();
 		if(common.lstorage.key(i).match(/^[0-9]{13}$/)){
 			lcontent[i] = common.lstorage.getItem(common.lstorage.key(i));
@@ -217,12 +217,15 @@ MAIN.prototype.clearLocalScript = function(){
 			this.log[this.ln].user = lcontent[i].user;
 			this.log[this.ln].keycount = lcontent[i].keycount;
 			this.log[this.ln].status_flag = lcontent[i].status_flag;
-			common.lstorage.removeItem(common.lstorage.key(i));
 			this.ln++;
 		}
 	}
+	for(var ii = lslen - 1; ii >= 0; ii--){
+		if(common.lstorage.key(ii).match(/^[0-9]{13}$/)){
+			common.lstorage.removeItem(common.lstorage.key(ii));
+		}
+	}
 }
-
 
 /** save script **/
 MAIN.prototype.saveScript = function(){
@@ -265,7 +268,6 @@ MAIN.prototype.disableScript = function(_d){
 
 /** save and close window **/
 MAIN.prototype.close = function(){
-	console.log(tinyMCE.get('script'));
 	if(window.confirm('内容を保存して終了します')){
 		this.status_flag = "close";
 		this.getScript();		
@@ -273,7 +275,6 @@ MAIN.prototype.close = function(){
 			this.clearLocalScript();
 			this.sendScript();
 		}else if(this.network == "offline"){
-			this.getScript();
 			this.saveScript();
 			location.href = "/tips?u=" + common.user;
 		}
@@ -284,7 +285,7 @@ MAIN.prototype.close = function(){
 MAIN.prototype.countContent = function(){
 	var text = "";
 	text = removeHTML(tinyMCE.get('script').getContent());
-	
+
 	//wordcount
 	this.wordcount = countWord(text);
 	this.wordCounter.innerHTML= this.wordcount; 
@@ -378,50 +379,50 @@ function pageBreak(_w, _p, _lw){
 	var linenum = 0;
 	for(var i=0; i<iw.length; i++){
 		if(!iw[i].match(/<p\sclass="break">([^<]+)<\/p>/g)){
-		//if(!iw[i].match(/<hr\s\/>/g)){
+			//if(!iw[i].match(/<hr\s\/>/g)){
 			ow.push(iw[i]);
 			linenum = linenum + Math.floor(charCount(removeHTML(iw[i]))/(2 *_lw));
 			linenum++;
 			console.log(linenum);
-				while(linenum >= _p){ 
-					ow.push("<p class='break'> ----- page" + linenum  + " ----- </p>");
-					linenum = linenum - _p;
-				}
-		}	
-	}
-	ow = ow.join("\n");
-	console.log(ow);
-	return ow;
-}
-
-function makeMonar(_k){
-	var m = "";
-	if(_k < 30){
-		m = "(´д｀)";
-	}else if(_k >= 30 && _k < 100){
-		m = "（ ﾟωﾟ ）";
-	}else if(_k >= 100 && _k < 200){
-		m = "(・∀・)ｲｲ!!";
-	}else if(_k >= 200){
-		m = " ((((；ﾟДﾟ))))";
-	}
-	if(_k%2 == 0){
-		m = "&nbsp;" + m;
-	}
-	return m;
-}
-
-var charCount = function (str) {
-	len = 0;
-	str = escape(str);
-	for (i=0;i<str.length;i++,len++) {
-		if (str.charAt(i) == "%") {
-			if (str.charAt(++i) == "u") {
-				i += 3;
-				len++;
+			while(linenum >= _p){ 
+				ow.push("<p class='break'> ----- page" + linenum  + " ----- </p>");
+				linenum = linenum - _p;
 			}
-			i++;
+		}	
 		}
+		ow = ow.join("\n");
+		console.log(ow);
+		return ow;
 	}
-	return len;
-}
+
+	function makeMonar(_k){
+		var m = "";
+		if(_k < 30){
+			m = "(´д｀)";
+		}else if(_k >= 30 && _k < 100){
+			m = "（ ﾟωﾟ ）";
+		}else if(_k >= 100 && _k < 200){
+			m = "(・∀・)ｲｲ!!";
+		}else if(_k >= 200){
+			m = " ((((；ﾟДﾟ))))";
+		}
+		if(_k%2 == 0){
+			m = "&nbsp;" + m;
+		}
+		return m;
+	}
+
+	var charCount = function (str) {
+		len = 0;
+		str = escape(str);
+		for (i=0;i<str.length;i++,len++) {
+			if (str.charAt(i) == "%") {
+				if (str.charAt(++i) == "u") {
+					i += 3;
+					len++;
+				}
+				i++;
+			}
+		}
+		return len;
+	}
