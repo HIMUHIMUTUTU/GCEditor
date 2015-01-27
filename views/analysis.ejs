@@ -59,7 +59,7 @@
 			<td class='script'>
 			<% if(i != script.length - 1){ for(var ai= 0; ai < script[i].add.length; ai++){%>
 			<font color='red'>
-			<%- script[i].add[ai] %>
+			+<%- script[i].add[ai] %>
 			</font><br />
 			
 			<% } %>
@@ -68,7 +68,7 @@
 			<% } %>
 			<% for(var ri= 0; ri < script[i].remove.length; ri++){%>
 			<font color='blue'>
-			<%- script[i].remove[ri] %>
+			-<%- script[i].remove[ri] %>
 			</font><br />
 			<% } %>
 			</td>
