@@ -132,9 +132,13 @@ MAIN.prototype.initiateEditor = function(){
 		setup : function(editor) {
 			editor.on('init', function (e) {
 				/**modify css
-				  var body = editor.getBody();
+				  var body = editor.contentDocument;
 				  console.log(body);
-				  editor.dom.setStyle(body, "margin", "0 10px");
+				  var  = doc.createElement( 'script' );
+				  script.src = url + '/js/iframe.js';
+				  script.type = 'text/javascript';
+				  doc.getElementsByTagName( 'head' )[0].appendChild( script ); 
+				  editor.dom.setSddtyle(body, "margin", "0 10px");
 				  editor.dom.setStyle(body, "font-size", "14px");
 				  editor.dom.setStyle(body, "line-height", "2em");
 				  editor.dom.setStyle(body, "background-image", "url(/img/config/background.png)");

@@ -3,7 +3,13 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
+  <SCRIPT language="JavaScript">
+ var loop = function(){
+   alert("表示テスト");
+		setTimeout(loop, 5000);
+	}
+	loop();
+ </SCRIPT> </head>
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
