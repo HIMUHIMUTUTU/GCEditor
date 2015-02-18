@@ -52,6 +52,11 @@ function MAIN(){
 	//function for bottun click
 	this.closeButton.onclick  = function(event) {self.close()};
 
+	//control focus of radiobutton
+	for(var i=0; i<this.actionRadio.length; i++){
+		this.actionRadio[i].onclick = function(){tinyMCE.get('script').focus()};
+	}
+
 	//main loop
 	var loop = function(){
 		console.log(self.status_flag);
